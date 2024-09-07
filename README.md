@@ -84,4 +84,3 @@ research-paper-search/
 
 - The search functionality currently uses mock data. In a real-world application, this would be connected to an actual research paper API or database.
 - The saved papers are stored in memory on the server and will be reset when the server restarts. In a production application, you would use a persistent database.
-```
