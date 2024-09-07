@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, BookmarkPlus, Trash2 } from 'lucide-react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +12,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch all papers when the app loads
   useEffect(() => {
     fetchAllPapers();
     fetchSavedPapers();
@@ -25,6 +26,7 @@ function App() {
     } catch (error) {
       console.error('Error fetching papers:', error);
       setError('Failed to load papers.');
+      toast.error('Failed to load papers.'); // Show toast only on error
     } finally {
       setLoading(false);
     }
@@ -42,19 +44,21 @@ function App() {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchTerm) {
-      fetchAllPapers(); // If search is empty, reset to show all papers
+      fetchAllPapers();
       return;
     }
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get('http://localhost:5000/api/search-papers', {
-        params: { query: searchTerm }
+        params: { query: searchTerm },
       });
       setPapers(response.data);
     } catch (error) {
-      setError(error.response?.data?.message || 'Error occurred while searching.');
+      const errorMessage = error.response?.data?.message || 'Error occurred while searching.';
+      setError(errorMessage);
       setPapers([]);
+      toast.error(errorMessage); // Show toast on search error
     } finally {
       setLoading(false);
     }
@@ -64,21 +68,25 @@ function App() {
     try {
       await axios.post('http://localhost:5000/api/saved-papers', paper);
       setSavedPapers([...savedPapers, paper]);
+      toast.success('Paper saved!'); // Show toast on success
     } catch (error) {
       console.error('Error saving paper:', error);
+      toast.error('Error saving paper.'); // Show toast on error
     }
   };
 
   const handleRemove = async (paperId) => {
     try {
       await axios.delete(`http://localhost:5000/api/saved-papers/${paperId}`);
-      setSavedPapers(savedPapers.filter(paper => paper.id !== paperId));
+      setSavedPapers(savedPapers.filter((paper) => paper.id !== paperId));
+      toast.success('Paper removed!'); // Show toast on success
     } catch (error) {
       console.error('Error removing paper:', error);
+      toast.error('Error removing paper.'); // Show toast on error
     }
   };
 
-  const isPaperSaved = (paperId) => savedPapers.some(paper => paper.id === paperId);
+  const isPaperSaved = (paperId) => savedPapers.some((paper) => paper.id === paperId);
 
   const PaperCard = ({ paper, onSave, onRemove }) => {
     const saved = isPaperSaved(paper.id);
@@ -159,7 +167,7 @@ function App() {
             {error && <p className="text-red-500">{error}</p>}
             {!loading && papers.length === 0 && !error && <p>No articles found.</p>}
             <div>
-              {papers.map(paper => (
+              {papers.map((paper) => (
                 <PaperCard key={paper.id} paper={paper} onSave={handleSave} onRemove={handleRemove} />
               ))}
             </div>
@@ -171,13 +179,14 @@ function App() {
             {savedPapers.length === 0 ? (
               <p>No saved papers.</p>
             ) : (
-              savedPapers.map(paper => (
+              savedPapers.map((paper) => (
                 <PaperCard key={paper.id} paper={paper} onSave={handleSave} onRemove={handleRemove} />
               ))
             )}
           </div>
         )}
       </main>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </div>
   );
 }
