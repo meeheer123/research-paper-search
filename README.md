@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Research Paper Search Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a simple web application that allows users to search for research papers, display the results, and save specific papers to their collection. The application consists of a React frontend and a Node.js/Express backend.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Search for research papers
+- Display search results
+- Save papers to a personal collection
+- Remove papers from the saved collection
+- Responsive design for various screen sizes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Before you begin, ensure you have the following installed on your system:
 
-### `npm test`
+- Node.js (v14 or later)
+- npm (usually comes with Node.js)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+1. Clone the repository:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone https://github.com/meeheer123/research-paper-search.git
+   cd research-paper-search
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install the dependencies for both the frontend and backend:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```shell
+   npm install
+   ```
 
-### `npm run eject`
+## Configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+No additional configuration is required for this demo application. However, in a production environment, you might want to set up environment variables for the server port, API keys, etc.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Running the Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To run both the frontend and backend concurrently:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```shell
+   npm run dev
+   ```
 
-## Learn More
+This command will start the React development server on `http://localhost:3000` and the Express backend server on `http://localhost:5000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Open your web browser and navigate to `http://localhost:3000`.
+2. Use the search bar to look for research papers.
+3. Click the "Save Paper" button to add a paper to your saved collection.
+4. Switch to the "Saved Papers" tab to view your saved papers.
+5. Click "Remove from Saved" to remove a paper from your saved collection.
 
-### Code Splitting
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```plaintext
+research-paper-search/
+├── public/
+├── src/
+│   ├── App.js
+│   ├── index.js
+│   └── index.css
+├── server.js
+├── package.json
+└── README.md
+```
 
-### Analyzing the Bundle Size
+- `src/App.js`: Main React component containing the application logic
+- `server.js`: Express server handling API requests for saved papers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Technologies Used
 
-### Making a Progressive Web App
+- Frontend: React, Tailwind CSS, Lucide React (for icons)
+- Backend: Node.js, Express
+- State Management: React Hooks
+- HTTP Requests: Axios
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Limitations
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The search functionality currently uses mock data. In a real-world application, this would be connected to an actual research paper API or database.
+- The saved papers are stored in memory on the server and will be reset when the server restarts. In a production application, you would use a persistent database.
+```
